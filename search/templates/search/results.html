@@ -1,0 +1,25 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Search Results for "{{ query }}"</h2>
+    <div class="list-group">
+        {% for report in reports %}
+        <a href="{% url 'reports:report_detail' report.slug %}" class="list-group-item list-group-item-action">
+            <h5 class="mb-1">{{ report.title }}</h5>
+            <p class="mb-1">{{ report.description|truncatewords:20 }}</p>
+            <small>{{ report.created_at|date:"M d, Y H:i" }}</small>
+        </a>
+        {% endfor %}
+    </div>
+    <div class="list-group mt-4">
+        {% for user in users %}
+        <a href="{% url 'profile' user.username %}" class="list-group-item list-group-item-action">
+            <h5 class="mb-1">{{ user.username }}</h5>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

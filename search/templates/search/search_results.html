@@ -1,0 +1,37 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Search Results</h1>
+    {% if query %}
+        <h2>Results for "{{ query }}"</h2>
+        <h3>Users</h3>
+        {% if users %}
+            <ul>
+                {% for user in users %}
+                    <li>{{ user.username }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No users found.</p>
+        {% endif %}
+
+        <h3>Reports</h3>
+        {% if reports %}
+            <ul>
+                {% for report in reports %}
+                    <li>
+                        <a href="{% url 'reports:report_detail' report.id %}">{{ report.description|truncatewords:20 }}</a> by {{ report.user.username }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No reports found.</p>
+        {% endif %}
+    {% else %}
+        <p>Please enter a search term.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Report Details{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4">{{ report.title }}</h2>
+            <p><strong>Category:</strong> {{ report.category.name }}</p>
+            <p><strong>Description:</strong></p>
+            <div>{{ report.description|safe }}</div>
+            <p><strong>Location:</strong> {{ report.street_name }}, {{ report.lga }}, {{ report.state }}, {{ report.country }}</p>
+            <p><strong>Reported on:</strong> {{ report.created_at|date:"M d, Y H:i" }}</p>
+
+            <div>
+                <h4>Images</h4>
+                {% for image in report.images.all %}
+                <img src="{{ image.image.url }}" alt="Report Image" class="img-fluid mb-3" style="max-width: 400px;">
+                {% endfor %}
+            </div>
+
+            <div>
+                <h4>Videos</h4>
+                {% for video in report.videos.all %}
+                <video controls class="img-fluid mb-3" style="max-width: 400px;">
+                    <source src="{{ video.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                {% endfor %}
+            </div>
+
+            <a href="{% url 'reports:report_update' report.slug %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'reports:report_delete' report.slug %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

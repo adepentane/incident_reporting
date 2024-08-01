@@ -1,0 +1,18 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}My Reports{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">My Reports</h2>
+    <div class="list-group">
+        {% for report in reports %}
+        <a href="{% url 'reports:report_detail' report.slug %}" class="list-group-item list-group-item-action">
+            <h5 class="mb-1">{{ report.category.name }}</h5>
+            <p class="mb-1">{{ report.description|truncatewords:20 }}</p>
+            <small>{{ report.created_at|date:"M d, Y H:i" }}</small>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

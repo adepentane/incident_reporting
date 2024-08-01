@@ -1,0 +1,48 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4">Dashboard</h2>
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        {% if user.profile_image %}
+                            <img src="{{ user.profile_image.url }}" alt="Profile Picture" class="img-thumbnail" style="width: 150px; height: 150px;">
+                        {% else %}
+                            <img src="{% static 'images/default-profile.png' %}" alt="Default Profile Picture" class="img-thumbnail" style="width: 150px; height: 150px;">
+                        {% endif %}
+                    </div>
+                    <h4 class="card-title mt-3">{{ user.username }}</h4>
+                    <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+                    <p class="card-text"><strong>First Name:</strong> {{ user.first_name }}</p>
+                    <p class="card-text"><strong>Last Name:</strong> {{ user.last_name }}</p>
+                    <p class="card-text"><strong>Phone Number:</strong> {{ user.phone_number }}</p>
+                    <p class="card-text"><strong>Country:</strong> {{ user.country.name }}</p>
+                    <p class="card-text"><strong>State:</strong> {{ user.state }}</p>
+                    <p class="card-text"><strong>LGA:</strong> {{ user.lga }}</p>
+                    <a href="{% url 'users:profile' %}" class="btn btn-primary">Edit Profile</a>
+                </div>
+            </div>
+            <h3 class="mt-5">My Reports</h3>
+            {% if reports %}
+                <div class="list-group mt-3">
+                    {% for report in reports %}
+                        <a href="{% url 'reports:report_detail' report.slug %}" class="list-group-item list-group-item-action">
+                            <h5 class="mb-1">{{ report.title }}</h5>
+                            <p class="mb-1">{{ report.description|truncatewords:20 }}</p>
+                            <small>Posted on {{ report.created_at|date:"F j, Y, g:i a" }}</small>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="mt-3">You have not posted any reports yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

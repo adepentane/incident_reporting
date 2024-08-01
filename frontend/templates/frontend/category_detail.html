@@ -1,0 +1,25 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Category Detail{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ category.name }}</h1>
+    {% if category.description %}
+        <p>{{ category.description }}</p>
+    {% else %}
+        <p>No description available.</p>
+    {% endif %}
+    <h3>Recent Reports</h3>
+    <div class="list-group">
+        {% for report in category.reports.all %}
+        <a href="{% url 'reports:report_detail' report.slug %}" class="list-group-item list-group-item-action">
+            <h5 class="mb-1">{{ report.user.username }}</h5>
+            <p class="mb-1">{{ report.description|truncatewords:20 }}</p>
+            <small>{{ report.created_at }}</small>
+        </a>
+        {% endfor %}
+    </div>
+    <a href="{% url 'frontend:home' %}" class="btn btn-secondary mt-3">Back to Categories</a>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Delete Report{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4">Delete Report</h2>
+            <p>Are you sure you want to delete this report?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a href="{% url 'reports:report_detail' report.pk %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

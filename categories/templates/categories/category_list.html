@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Categories{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Categories</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+                {% if category.is_active %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.is_active|yesno:"Active,Inactive" }}</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

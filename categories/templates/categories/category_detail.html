@@ -1,0 +1,24 @@
+{% extends 'frontend/base.html' %}
+{% block title %}Category Details{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4">{{ category.name }}</h2>
+            <p>{{ category.description }}</p>
+
+            <h3>Reports in this Category</h3>
+            <div class="list-group">
+                {% for report in category.report_set.all %}
+                <a href="{% url 'reports:report_detail' report.slug %}" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">{{ report.title }}</h5>
+                    <p class="mb-1">{{ report.description|truncatewords:20 }}</p>
+                    <small>{{ report.created_at|date:"M d, Y H:i" }}</small>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
